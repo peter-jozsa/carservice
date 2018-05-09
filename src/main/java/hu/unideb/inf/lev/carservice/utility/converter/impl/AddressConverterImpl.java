@@ -19,6 +19,15 @@ public class AddressConverterImpl implements AddressConverter {
 
     @Override
     public Address toModel(AddressViewModel viewModel) {
-        return null;
+        if (viewModel == null) {
+            return null;
+        }
+
+        return new Address(
+                viewModel.getCountry(),
+                viewModel.getZip(),
+                viewModel.getCity(),
+                viewModel.getAddressLine()
+        );
     }
 }

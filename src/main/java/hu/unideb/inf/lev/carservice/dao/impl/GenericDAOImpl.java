@@ -10,7 +10,6 @@ import java.util.List;
 
 public abstract class GenericDAOImpl<T, Id extends Serializable> implements hu.unideb.inf.lev.carservice.dao.GenericDAO<T, Id> {
     private Class<T> type;
-    protected EntityManager entityManager = EntityManagerFactoryHelper.getEntityManager();
 
     public GenericDAOImpl() {
         Type t = getClass().getGenericSuperclass();
@@ -19,31 +18,46 @@ public abstract class GenericDAOImpl<T, Id extends Serializable> implements hu.u
     }
 
     @Override
-    public void persist(T entity) {
+    public void create(T entity) {
+        EntityManager entityManager = EntityManagerFactoryHelper.getEntityManager();
+
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
         entityManager.getTransaction().commit();
     }
 
     @Override
+    public void update(T entity) {
+        EntityManager entityManager = EntityManagerFactoryHelper.getEntityManager();
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(entity);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
     public T findById(Id id) {
-        return entityManager.find(type, id);
+        return EntityManagerFactoryHelper.getEntityManager().find(type, id);
     }
 
     @Override
     public void delete(T entity) {
+        EntityManager entityManager = EntityManagerFactoryHelper.getEntityManager();
+
         entityManager.getTransaction().begin();
+        if (!entityManager.contains(entity)) {
+            entity = entityManager.merge(entity);
+        }
         entityManager.remove(entity);
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public void delete(Id id) {
-        this.delete(entityManager.getReference(type, id));
-    }
-
-    @Override
     public List<T> getAll() {
-        return entityManager.createQuery("SELECT p FROM " + type.getSimpleName() + " p", type).getResultList();
+        EntityManager entityManager = EntityManagerFactoryHelper.getEntityManager();
+
+        return entityManager
+                .createQuery("SELECT p FROM " + type.getSimpleName() + " p", type)
+                .getResultList();
     }
 }

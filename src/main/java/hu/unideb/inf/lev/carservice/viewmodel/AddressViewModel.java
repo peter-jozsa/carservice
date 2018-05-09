@@ -2,14 +2,19 @@ package hu.unideb.inf.lev.carservice.viewmodel;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableStringValue;
 
 public class AddressViewModel {
-    private StringProperty country;
-    private IntegerProperty zip;
-    private StringProperty city;
-    private StringProperty addressLine;
+    private StringProperty country = new SimpleStringProperty();
+    private IntegerProperty zip = new SimpleIntegerProperty();
+    private StringProperty city = new SimpleStringProperty();
+    private StringProperty addressLine = new SimpleStringProperty();
+
+    public AddressViewModel() {
+    }
 
     public AddressViewModel(StringProperty country, IntegerProperty zip, StringProperty city, StringProperty addressLine) {
         this.country = country;

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="150.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.lev.carservice.controller.JobTypeFormViewController">
+    <children>
+        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="NEVER" />
+            </rowConstraints>
+            <children>
+                  <GridPane>
+                      <columnConstraints>
+                          <ColumnConstraints hgrow="NEVER" maxWidth="71.0" minWidth="10.0" prefWidth="47.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="153.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                          <Label text="Név">
+                              <GridPane.margin>
+                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              </GridPane.margin>
+                          </Label>
+                          <TextField fx:id="nameField" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </TextField>
+                      </children>
+                  </GridPane>
+                <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="1">
+                    <buttons>
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancelBtnClick" text="Mégse" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSaveBtnClick" text="Mentés" />
+                    </buttons>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </ButtonBar>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

@@ -2,17 +2,24 @@ package hu.unideb.inf.lev.carservice.viewmodel;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableStringValue;
 
-public class PersonViewModel {
-    private LongProperty id;
-    private StringProperty firstName;
-    private StringProperty lastName;
-    private StringProperty phone;
-    private AddressViewModel address;
+import java.util.Objects;
 
-    public PersonViewModel(LongProperty id, StringProperty firstName, StringProperty lastName, StringProperty phone, AddressViewModel address) {
+public class PersonViewModel {
+    private Long id;
+    private StringProperty firstName = new SimpleStringProperty();
+    private StringProperty lastName = new SimpleStringProperty();
+    private StringProperty phone = new SimpleStringProperty();
+    private AddressViewModel address = new AddressViewModel();
+
+    public PersonViewModel() {
+    }
+
+    public PersonViewModel(Long id, StringProperty firstName, StringProperty lastName, StringProperty phone, AddressViewModel address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,11 +27,14 @@ public class PersonViewModel {
         this.address = address;
     }
 
-    public long getId() {
-        return id.get();
+    public PersonViewModel(StringProperty firstName, StringProperty lastName, StringProperty phone, AddressViewModel address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
     }
 
-    public LongProperty idProperty() {
+    public Long getId() {
         return id;
     }
 
@@ -64,8 +74,8 @@ public class PersonViewModel {
         return Bindings.concat(lastNameProperty(), " ", firstNameProperty());
     }
 
-    public void setId(long id) {
-        this.id.set(id);
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setFirstName(String firstName) {
@@ -87,11 +97,27 @@ public class PersonViewModel {
     @Override
     public String toString() {
         return "PersonViewModel{" +
-                "id=" + getId() +
-                ", firstName=" + getFirstName() +
+                "firstName=" + getFirstName() +
                 ", lastName=" + getLastName() +
                 ", phone=" + getPhone() +
                 ", address=" + getAddress() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonViewModel that = (PersonViewModel) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(address, that.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, phone, address);
     }
 }

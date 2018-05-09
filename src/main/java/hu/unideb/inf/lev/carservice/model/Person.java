@@ -27,6 +27,14 @@ public class Person {
     public Person() {
     }
 
+    public Person(Long id, String firstName, String lastName, String phone, Address address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+    }
+
     public Person(String firstName, String lastName, String phone, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;

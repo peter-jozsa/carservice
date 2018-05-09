@@ -10,8 +10,12 @@ import javafx.beans.property.SimpleStringProperty;
 public class PersonConverterImpl implements PersonConverter {
     @Override
     public PersonViewModel fromModel(Person model) {
+        if (model == null) {
+            return null;
+        }
+
         return new PersonViewModel(
-                new SimpleLongProperty(model.getId()),
+                model.getId(),
                 new SimpleStringProperty(model.getFirstName()),
                 new SimpleStringProperty(model.getLastName()),
                 new SimpleStringProperty(model.getPhone()),
@@ -21,6 +25,16 @@ public class PersonConverterImpl implements PersonConverter {
 
     @Override
     public Person toModel(PersonViewModel viewModel) {
-        return null;
+        if (viewModel == null) {
+            return null;
+        }
+
+        return new Person(
+                viewModel.getId(),
+                viewModel.getFirstName(),
+                viewModel.getLastName(),
+                viewModel.getPhone(),
+                ConverterHelper.toModel(viewModel.getAddress())
+        );
     }
 }

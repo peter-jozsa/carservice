@@ -1,8 +1,5 @@
 package hu.unideb.inf.lev.carservice.app;
 
-import hu.unideb.inf.lev.carservice.controller.ViewController;
-import hu.unideb.inf.lev.carservice.controller.context.PersonFormViewControllerContext;
-import hu.unideb.inf.lev.carservice.controller.context.ViewControllerContext;
 import hu.unideb.inf.lev.carservice.model.Address;
 import hu.unideb.inf.lev.carservice.model.Person;
 import hu.unideb.inf.lev.carservice.service.CarserviceService;
@@ -11,11 +8,8 @@ import hu.unideb.inf.lev.carservice.utility.EntityManagerFactoryHelper;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class MainApp extends Application {
     private static MainApp instance;
@@ -36,10 +30,21 @@ public class MainApp extends Application {
         launch(args);
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
 
+        CarserviceService svc = new CarserviceServiceImpl();
+        Person p = new Person("Péter", "Józsa", "003612134567", new Address("Magyarország", 4025, "Debrecen", "Piac utca 49-51."));
+
+        svc.createPerson(p);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainPane.fxml"));
+        primaryStage.setScene(new Scene(loader.load()));
         primaryStage.setTitle("CarService - Józsa Péter");
         primaryStage.setOnCloseRequest(event -> {
             Platform.exit();
@@ -52,57 +57,6 @@ public class MainApp extends Application {
             System.exit(0);
         });
 
-        CarserviceService svc = new CarserviceServiceImpl();
-        Person p = new Person("Péter", "Józsa", "003612134567", new Address("Magyarország", 4025, "Debrecen", "Piac utca 49-51."));
-
-        svc.createPerson(p);
-
-        displayScene(loadView("MainPane"));
-    }
-
-    public void showPersonFormViewController(Person person) {
-        try {
-            displayScene(loadView("PersonFormView", new PersonFormViewControllerContext(person)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void displayScene(Scene scene) {
-        primaryStage.setScene(scene);
-
         primaryStage.show();
-    }
-
-    private Scene loadView(String viewName) throws IOException {
-        return loadView(viewName, null);
-    }
-
-    private <T extends ViewControllerContext> Scene loadView(String viewName, T ctx) throws IOException {
-        String fullViewName = "/view/" + viewName + ".fxml";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fullViewName));
-        if (ctx != null) {
-            loader.setControllerFactory(controllerClass -> {
-                if (ViewController.class.isAssignableFrom(controllerClass)) {
-                    ViewController controller = null;
-                    try {
-                        controller = (ViewController) controllerClass.newInstance();
-
-                        controller.setContext(ctx);
-
-                        return controller;
-                    } catch(Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-                throw new RuntimeException(
-                    "Controller of " + fullViewName + " is not a ViewController: context cannot be passed for it."
-                );
-            });
-        }
-        Parent root = loader.load();
-
-        return new Scene(root);
     }
 }
