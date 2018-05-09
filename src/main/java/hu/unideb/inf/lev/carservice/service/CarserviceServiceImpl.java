@@ -4,6 +4,7 @@ import hu.unideb.inf.lev.carservice.dao.CarDAO;
 import hu.unideb.inf.lev.carservice.dao.DAOFactory;
 import hu.unideb.inf.lev.carservice.dao.JobTypeDAO;
 import hu.unideb.inf.lev.carservice.dao.PersonDAO;
+import hu.unideb.inf.lev.carservice.model.Address;
 import hu.unideb.inf.lev.carservice.model.JobType;
 import hu.unideb.inf.lev.carservice.model.Person;
 import hu.unideb.inf.lev.carservice.service.exception.EmptyFieldValueException;
@@ -64,9 +65,28 @@ public class CarserviceServiceImpl implements CarserviceService {
         if (person.getPhone() == null || person.getPhone().trim().isEmpty()) {
             throw new EmptyFieldValueException(Person.class, "phone");
         }
-        if (person.getAddress() == null) {
+
+        Address addr = person.getAddress();
+        if (addr == null) {
             throw new EmptyFieldValueException(Person.class, "address");
         }
+
+        if (addr.getCountry() == null || addr.getCountry().trim().isEmpty()) {
+            throw new EmptyFieldValueException(Address.class, "country");
+        }
+
+        if (addr.getZip() == 0) {
+            throw new EmptyFieldValueException(Address.class, "zip");
+        }
+
+        if (addr.getCity() == null || addr.getCity().trim().isEmpty()) {
+            throw new EmptyFieldValueException(Address.class, "city");
+        }
+
+        if (addr.getAddressLine() == null || addr.getAddressLine().trim().isEmpty()) {
+            throw new EmptyFieldValueException(Address.class, "addressLine");
+        }
+
         return true;
     }
 
@@ -92,19 +112,31 @@ public class CarserviceServiceImpl implements CarserviceService {
 
     @Override
     public void createJobType(JobType jobType) throws ValidationException {
-        jobTypeDAO.create(jobType);
+        if (validateJobType(jobType)) {
+            jobTypeDAO.create(jobType);
+        }
     }
 
     @Override
     public void updateJobType(JobType jobType) throws ValidationException, EntityNotFoundException {
-        JobType entity = getJobTypeById(jobType.getId());
-        if (entity == null) {
-            throw new EntityNotFoundException("JobType entity (id=" + jobType.getId() + ") does not exist!");
+        if (validateJobType(jobType)) {
+            JobType entity = getJobTypeById(jobType.getId());
+            if (entity == null) {
+                throw new EntityNotFoundException("JobType entity (id=" + jobType.getId() + ") does not exist!");
+            }
+
+            entity.setName(jobType.getName());
+
+            jobTypeDAO.update(entity);
         }
+    }
 
-        entity.setName(jobType.getName());
-
-        jobTypeDAO.update(entity);
+    @Override
+    public boolean validateJobType(JobType jobType) throws ValidationException {
+        if (jobType.getName() == null || jobType.getName().trim().isEmpty()) {
+            throw new EmptyFieldValueException(JobType.class, "name");
+        }
+        return true;
     }
 
     @Override

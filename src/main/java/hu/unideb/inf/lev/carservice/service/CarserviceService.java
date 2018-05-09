@@ -21,6 +21,7 @@ public interface CarserviceService {
     void createJobType(JobType jobType) throws ValidationException;
     void updateJobType(JobType jobType) throws ValidationException, EntityNotFoundException;
     void deleteJobTypeById(Long id) throws EntityNotFoundException;
+    boolean validateJobType(JobType jobType) throws ValidationException;
     List<JobType> getAllJobType();
     List<JobType> textSearchJobType(String str);
 }
