@@ -1,5 +1,6 @@
 package hu.unideb.inf.lev.carservice.service;
 
+import hu.unideb.inf.lev.carservice.model.Car;
 import hu.unideb.inf.lev.carservice.model.JobType;
 import hu.unideb.inf.lev.carservice.model.Person;
 import hu.unideb.inf.lev.carservice.service.exception.EmptyFieldValueException;
@@ -24,4 +25,12 @@ public interface CarserviceService {
     boolean validateJobType(JobType jobType) throws ValidationException;
     List<JobType> getAllJobType();
     List<JobType> textSearchJobType(String str);
+
+    Car getCarById(Long id);
+    void createCar(Car car) throws ValidationException;
+    void updateCar(Car car) throws ValidationException, EntityNotFoundException;
+    void deleteCarById(Long id) throws EntityNotFoundException;
+    boolean validateCar(Car car) throws ValidationException;
+    List<Car> getAllCar();
+    List<Car> textSearchCar(String str);
 }

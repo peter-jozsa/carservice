@@ -1,6 +1,7 @@
 package hu.unideb.inf.lev.carservice.controller;
 
 import hu.unideb.inf.lev.carservice.app.MainApp;
+import hu.unideb.inf.lev.carservice.model.Car;
 import hu.unideb.inf.lev.carservice.model.JobType;
 import hu.unideb.inf.lev.carservice.model.Person;
 import javafx.fxml.FXML;
@@ -20,6 +21,9 @@ public class MainViewController {
 
     @FXML
     private JobTypeListViewController jobTypeListViewController;
+
+    @FXML
+    private CarListViewController carListViewController;
 
     private Stage currentStage;
 
@@ -119,6 +123,49 @@ public class MainViewController {
             currentStage.showAndWait();
 
             jobTypeListViewController.refresh();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createCar() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CarFormView.fxml"));
+            currentStage= new Stage();
+            currentStage.setTitle("Gépjármű létrehozás");
+
+            root = loader.load();
+
+            currentStage.setScene(new Scene(root));
+            currentStage.initOwner(MainApp.getInstance().getPrimaryStage());
+            currentStage.initModality(Modality.APPLICATION_MODAL);
+            currentStage.showAndWait();
+
+            carListViewController.refresh();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void modifyCar(Car car) {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CarFormView.fxml"));
+            currentStage= new Stage();
+            currentStage.setTitle("Gépjármű módosítás");
+
+            root = loader.load();
+
+            CarFormViewController controller = loader.getController();
+            controller.setCar(car);
+
+            currentStage.setScene(new Scene(root));
+            currentStage.initOwner(MainApp.getInstance().getPrimaryStage());
+            currentStage.initModality(Modality.APPLICATION_MODAL);
+            currentStage.showAndWait();
+
+            carListViewController.refresh();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package hu.unideb.inf.lev.carservice.app;
 
 import hu.unideb.inf.lev.carservice.model.Address;
+import hu.unideb.inf.lev.carservice.model.Car;
 import hu.unideb.inf.lev.carservice.model.Person;
 import hu.unideb.inf.lev.carservice.service.CarserviceService;
 import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
@@ -40,6 +41,9 @@ public class MainApp extends Application {
 
         CarserviceService svc = new CarserviceServiceImpl();
         Person p = new Person("Péter", "Józsa", "003612134567", new Address("Magyarország", 4025, "Debrecen", "Piac utca 49-51."));
+        Car c = new Car("PIY-936", "BMW", "E46 320i", "WAV456657556KK53716");
+
+        p.addCar(c);
 
         svc.createPerson(p);
 

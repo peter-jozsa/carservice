@@ -5,6 +5,7 @@ import hu.unideb.inf.lev.carservice.dao.DAOFactory;
 import hu.unideb.inf.lev.carservice.dao.JobTypeDAO;
 import hu.unideb.inf.lev.carservice.dao.PersonDAO;
 import hu.unideb.inf.lev.carservice.model.Address;
+import hu.unideb.inf.lev.carservice.model.Car;
 import hu.unideb.inf.lev.carservice.model.JobType;
 import hu.unideb.inf.lev.carservice.model.Person;
 import hu.unideb.inf.lev.carservice.service.exception.EmptyFieldValueException;
@@ -157,5 +158,75 @@ public class CarserviceServiceImpl implements CarserviceService {
     @Override
     public List<JobType> textSearchJobType(String str) {
         return jobTypeDAO.findByName(str);
+    }
+
+    @Override
+    public Car getCarById(Long id) {
+        return carDAO.findById(id);
+    }
+
+    @Override
+    public void createCar(Car car) throws ValidationException {
+            if (validateCar(car)) {
+                carDAO.create(car);
+            }
+    }
+
+    @Override
+    public void updateCar(Car car) throws ValidationException, EntityNotFoundException {
+        if (validateCar(car)) {
+            Car entity = getCarById(car.getId());
+            if (entity == null) {
+                throw new EntityNotFoundException("Car entity (id=" + car.getId() + ") does not exist!");
+            }
+
+            entity.setRegistrationNumber(car.getRegistrationNumber());
+            entity.setBrand(car.getBrand());
+            entity.setType(car.getType());
+            entity.setVIN(car.getVIN());
+            entity.setOwner(car.getOwner());
+
+            carDAO.update(entity);
+        }
+    }
+
+    @Override
+    public void deleteCarById(Long id) throws EntityNotFoundException {
+        Car entity = getCarById(id);
+        if (entity == null) {
+            throw new EntityNotFoundException("Car entity (id=" + id + ") does not exist!");
+        }
+
+        carDAO.delete(entity);
+    }
+
+    @Override
+    public boolean validateCar(Car car) throws ValidationException {
+        if (car.getRegistrationNumber() == null || car.getRegistrationNumber().trim().isEmpty()) {
+            throw new EmptyFieldValueException(Address.class, "registrationNumber");
+        }
+        if (car.getBrand() == null || car.getBrand().trim().isEmpty()) {
+            throw new EmptyFieldValueException(Address.class, "brand");
+        }
+        if (car.getType() == null || car.getType().trim().isEmpty()) {
+            throw new EmptyFieldValueException(Address.class, "type");
+        }
+        if (car.getVIN() == null || car.getVIN().trim().isEmpty()) {
+            throw new EmptyFieldValueException(Address.class, "VIN");
+        }
+        if (car.getOwner() == null) {
+            throw new EmptyFieldValueException(Address.class, "owner");
+        }
+        return true;
+    }
+
+    @Override
+    public List<Car> getAllCar() {
+        return carDAO.getAll();
+    }
+
+    @Override
+    public List<Car> textSearchCar(String str) {
+        return null;
     }
 }

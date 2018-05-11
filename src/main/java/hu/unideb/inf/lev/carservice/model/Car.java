@@ -1,7 +1,5 @@
 package hu.unideb.inf.lev.carservice.model;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,7 +18,10 @@ public class Car {
     @Column(nullable = false)
     private String type;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @Column(nullable = false)
+    private String VIN;
+
+    @ManyToOne()
     private Person owner;
 
     @OneToMany
@@ -29,12 +30,28 @@ public class Car {
     public Car() {
     }
 
-    public Car(String registrationNumber, String brand, String type, Person owner, List<Worksheet> worksheets) {
+    public Car(Long id, String registrationNumber, String brand, String type, String VIN, Person owner) {
+        this.id = id;
         this.registrationNumber = registrationNumber;
         this.brand = brand;
         this.type = type;
+        this.VIN = VIN;
         this.owner = owner;
-        this.worksheets = worksheets;
+    }
+
+    public Car(String registrationNumber, String brand, String type, String VIN, Person owner) {
+        this.registrationNumber = registrationNumber;
+        this.brand = brand;
+        this.type = type;
+        this.VIN = VIN;
+        this.owner = owner;
+    }
+
+    public Car(String registrationNumber, String brand, String type, String VIN) {
+        this.registrationNumber = registrationNumber;
+        this.brand = brand;
+        this.type = type;
+        this.VIN = VIN;
     }
 
     public Long getId() {
@@ -51,6 +68,10 @@ public class Car {
 
     public String getType() {
         return type;
+    }
+
+    public String getVIN() {
+        return VIN;
     }
 
     public Person getOwner() {
@@ -77,6 +98,10 @@ public class Car {
         this.type = type;
     }
 
+    public void setVIN(String vin) {
+        this.VIN = vin;
+    }
+
     public void setOwner(Person owner) {
         this.owner = owner;
     }
@@ -92,6 +117,7 @@ public class Car {
                 ", registrationNumber='" + registrationNumber + '\'' +
                 ", brand='" + brand + '\'' +
                 ", type='" + type + '\'' +
+                ", VIN='" + VIN + '\'' +
                 ", owner=" + owner +
                 '}';
     }
