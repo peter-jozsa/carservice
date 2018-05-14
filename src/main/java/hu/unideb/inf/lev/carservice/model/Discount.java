@@ -50,7 +50,7 @@ public class Discount {
     }
 
     /**
-     * Sets the value of the discount
+     * Sets the value of the discount.
      * @param value The value of the discount in percent(0-100)
      */
     public void setValue(Integer value) {
@@ -67,7 +67,7 @@ public class Discount {
     }
 
     /**
-     * Sets the date until this discount is valid
+     * Sets the date until this discount is valid.
      * @param validUntil The validity date
      */
     public void setValidUntil(LocalDateTime validUntil) {

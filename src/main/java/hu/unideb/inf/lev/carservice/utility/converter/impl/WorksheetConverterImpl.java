@@ -11,6 +11,10 @@ import javafx.collections.FXCollections;
 
 import java.util.stream.Collectors;
 
+/**
+ * A converter class which manages the conversions between {@link Worksheet} entities
+ * and {@link WorksheetViewModel} view models.
+ */
 public class WorksheetConverterImpl implements WorksheetConverter {
     @Override
     public WorksheetViewModel fromModel(Worksheet model) {

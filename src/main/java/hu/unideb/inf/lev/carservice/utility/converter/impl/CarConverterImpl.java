@@ -7,6 +7,10 @@ import hu.unideb.inf.lev.carservice.viewmodel.CarViewModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * A converter which manages the conversions between {@link Car} entities
+ * and {@link CarViewModel} view models.
+ */
 public class CarConverterImpl implements CarConverter {
     @Override
     public CarViewModel fromModel(Car model) {

@@ -5,6 +5,10 @@ import hu.unideb.inf.lev.carservice.utility.converter.DiscountConverter;
 import hu.unideb.inf.lev.carservice.viewmodel.DiscountViewModel;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/**
+ * A converter which manages the conversions between {@link Discount} entities
+ * and {@link DiscountViewModel} view models.
+ */
 public class DiscountConverterImpl implements DiscountConverter {
     @Override
     public DiscountViewModel fromModel(Discount model) {

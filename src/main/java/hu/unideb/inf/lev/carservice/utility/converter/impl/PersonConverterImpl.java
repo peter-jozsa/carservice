@@ -6,6 +6,10 @@ import hu.unideb.inf.lev.carservice.utility.converter.PersonConverter;
 import hu.unideb.inf.lev.carservice.viewmodel.PersonViewModel;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * A converter class which manages the conversions between {@link Person} entities
+ * and {@link PersonViewModel} view models.
+ */
 public class PersonConverterImpl implements PersonConverter {
     @Override
     public PersonViewModel fromModel(Person model) {

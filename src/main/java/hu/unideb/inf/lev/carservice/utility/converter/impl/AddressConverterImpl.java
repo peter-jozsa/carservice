@@ -6,6 +6,10 @@ import hu.unideb.inf.lev.carservice.viewmodel.AddressViewModel;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * A converter which manages the conversions between {@link Address} entities
+ * and {@link AddressViewModel} view models.
+ */
 public class AddressConverterImpl implements AddressConverter {
     @Override
     public AddressViewModel fromModel(Address model) {

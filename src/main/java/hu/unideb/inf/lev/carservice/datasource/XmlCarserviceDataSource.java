@@ -22,40 +22,60 @@ public class XmlCarserviceDataSource implements CarserviceDataSource {
 
     @XmlElementWrapper(name = "cars")
     @XmlElement(name = "car")
+    @Override
     public List<Car> getCars() {
         return cars;
     }
 
     @XmlElementWrapper(name = "persons")
     @XmlElement(name = "person")
+    @Override
     public List<Person> getPersons() {
         return persons;
     }
 
     @XmlElementWrapper(name = "jobTypes")
     @XmlElement(name = "jobType")
+    @Override
     public List<JobType> getJobTypes() {
         return jobTypes;
     }
 
     @XmlElementWrapper(name = "worksheets")
     @XmlElement(name = "worksheet")
+    @Override
     public List<Worksheet> getWorksheets() {
         return worksheets;
     }
 
+    /**
+     * Sets the list of car entities.
+     * @param cars A list of car entities
+     */
     public void setCars(List<Car> cars) {
         this.cars = cars;
     }
 
+    /**
+     * Sets the list of person entities.
+     * @param persons A list of person entities
+     */
     public void setPersons(List<Person> persons) {
         this.persons = persons;
     }
 
+    /**
+     * Sets the list of job type entities.
+     * @param jobTypes A list of job type entities.
+     */
     public void setJobTypes(List<JobType> jobTypes) {
         this.jobTypes = jobTypes;
     }
 
+    /**
+     * Sets the list of worksheet entities.
+     * @param worksheets A list of worksheet entities.
+     */
     public void setWorksheets(List<Worksheet> worksheets) {
         this.worksheets = worksheets;
     }

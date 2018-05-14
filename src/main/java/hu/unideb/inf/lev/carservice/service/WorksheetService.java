@@ -10,8 +10,19 @@ import java.util.List;
  * This interface describes the look of the service which manages {@link Worksheet} entities.
  */
 public interface WorksheetService {
+    /**
+     * Validity time of a discount in seconds.
+     */
     int DISCOUNT_VALIDITY_TIME = 30*24*60*60;
+
+    /**
+     * Maximum discount percentage value.
+     */
     int DISCOUNT_MAX_VALUE = 40;
+
+    /**
+     * The step value when discount should be increased for a person.
+     */
     int DISCOUNT_STEP_VALUE = 5;
 
     /**
@@ -45,7 +56,7 @@ public interface WorksheetService {
 
     /**
      * Validates a worksheet entity.
-     * @param car An entity to be validated.
+     * @param worksheet An entity to be validated.
      * @return <code>true</code> if validation was successful.
      * @throws ValidationException When the given entity is invalid.
      */
