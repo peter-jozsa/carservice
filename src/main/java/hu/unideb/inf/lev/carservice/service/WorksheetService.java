@@ -74,4 +74,19 @@ public interface WorksheetService {
      * @return A list of worksheet entities matching the criteria.
      */
     List<Worksheet> textSearchWorksheet(String str);
+
+    /**
+     * Calculates the sum of job prices of the worksheet.
+     * @param worksheet A worksheet entity.
+     * @return The sum of job costs.
+     */
+    long calculateJobSum(Worksheet worksheet);
+
+    /**
+     * Calculates the total cost of the worksheet.
+     * It also applies the discount.
+     * @param worksheet A worksheet entity
+     * @return The sum of job costs minus the discount.
+     */
+    long calculateTotal(Worksheet worksheet);
 }

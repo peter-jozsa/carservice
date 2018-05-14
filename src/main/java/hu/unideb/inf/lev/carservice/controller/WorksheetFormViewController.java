@@ -51,6 +51,9 @@ public class WorksheetFormViewController {
     private Label ownerLabel;
 
     @FXML
+    private Label sumLabel;
+
+    @FXML
     private TableView<SelectableJobTypeViewModel> jobTypeTable;
 
     @FXML
@@ -128,6 +131,8 @@ public class WorksheetFormViewController {
                 discountLabel.textProperty().bind(worksheetViewModel.getCar().getOwner().getDiscount().formattedValueProperty());
             }
         }
+
+        refreshJobs();
     }
 
     private void carChanged() {
@@ -140,20 +145,19 @@ public class WorksheetFormViewController {
 
             if (car.getOwner().getDiscount() != null) {
                 discountLabel.textProperty().bind(car.getOwner().getDiscount().formattedValueProperty());
+                worksheetViewModel.setDiscount(car.getOwner().getDiscount().getValue());
             }
         }
 
     }
 
     private void refreshJobs() {
-        long sum = observableJobTypes
-                .stream()
-                .filter(jobType -> jobType.isSelected())
-                .mapToLong(jobType -> jobType.getPrice())
-                .sum();
-
         worksheetViewModel.setJobs(observableJobTypes.stream().filter(jobType -> jobType.isSelected()).collect(Collectors.toList()));
-        worksheetViewModel.setTotal(sum);
+
+        Worksheet model = ConverterHelper.toModel(worksheetViewModel);
+        sumLabel.textProperty().setValue(service.calculateJobSum(model) + " Ft");
+
+        worksheetViewModel.setTotal(service.calculateTotal(model));
     }
 
     @FXML

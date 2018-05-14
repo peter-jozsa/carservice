@@ -30,13 +30,11 @@ public class WorksheetServiceImpl implements WorksheetService {
     public void createWorksheet(Worksheet worksheet) throws ValidationException {
         if (validateWorksheet(worksheet)) {
             worksheet.setCreationDate(LocalDateTime.now());
-            if (worksheet.getCar().getOwner().getDiscount() != null) {
-                worksheet.setDiscount(worksheet.getCar().getOwner().getDiscount().getValue());
-            }
 
             worksheetDAO.create(worksheet);
             try {
                 personService.increaseDiscountOfPerson(worksheet.getCar().getOwner());
+                personService.updatePerson(worksheet.getCar().getOwner());
             } catch (EntityNotFoundException e) {
                 e.printStackTrace();
             }
@@ -99,5 +97,18 @@ public class WorksheetServiceImpl implements WorksheetService {
     @Override
     public List<Worksheet> textSearchWorksheet(String str) {
         return null;
+    }
+
+    @Override
+    public long calculateJobSum(Worksheet worksheet) {
+        return worksheet.getJobs()
+                .stream()
+                .mapToLong(jobType -> jobType.getPrice())
+                .sum();
+    }
+
+    @Override
+    public long calculateTotal(Worksheet worksheet) {
+        return calculateJobSum(worksheet) * (100 - worksheet.getDiscount())/100;
     }
 }

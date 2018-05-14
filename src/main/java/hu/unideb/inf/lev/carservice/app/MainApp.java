@@ -10,6 +10,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -17,6 +19,7 @@ import java.io.IOException;
  * Main class which is the entry point of the application.
  */
 public class MainApp extends Application {
+    private static Logger logger = LoggerFactory.getLogger(MainApp.class);
     private static MainApp instance;
     private Stage primaryStage;
 
@@ -45,17 +48,22 @@ public class MainApp extends Application {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
+        logger.info("Application initialisation...");
         if (args.length > 0) {
+            logger.info("Going to load initial data from " + args[0] + "file...");
             CarserviceDataSource src = XmlDataSourceLoader.loadData(args[0]);
 
             if (src != null) {
                 try {
+                    logger.info("Initial data loaded, going to import it...");
                     DataSourceImporter.importDatasource(src);
                 } catch (ValidationException e) {
                     e.printStackTrace();
                 }
             }
         }
+
+        logger.info("Launching JavaFX application...");
         launch(args);
     }
 
@@ -83,10 +91,13 @@ public class MainApp extends Application {
         }
         primaryStage.setTitle("CarService - Józsa Péter");
         primaryStage.setOnCloseRequest(event -> {
+            logger.info("Exiting...");
             Platform.exit();
             try {
+                logger.info("Closing connection to database...");
                 EntityManagerFactoryHelper.close();
             } catch (Exception e) {
+                logger.error("Could not close connection:"+e.getMessage());
                 e.printStackTrace();
                 System.exit(1);
             }

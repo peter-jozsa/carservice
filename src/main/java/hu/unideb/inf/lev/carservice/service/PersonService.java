@@ -63,8 +63,12 @@ public interface PersonService {
     /**
      * Increases the discount of the person.
      * @param person A person whose discount percentage should be increased.
-     * @throws ValidationException When the provided person entity could not be updated since it is invalid.
-     * @throws EntityNotFoundException When the given entity could not be loaded from the database.
      */
-    void increaseDiscountOfPerson(Person person) throws ValidationException, EntityNotFoundException;
+    void increaseDiscountOfPerson(Person person);
+
+    /**
+     * Removes the expired discount of the person.
+     * @param person A person entity.
+     */
+    void removeExpiredDiscount(Person person);
 }

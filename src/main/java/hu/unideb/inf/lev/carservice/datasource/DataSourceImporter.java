@@ -36,8 +36,6 @@ public class DataSourceImporter {
             personService.createPerson(person);
         }
 
-        System.out.println(personService.getAllPerson());
-
         for (Car car : src.getCars()) {
             car.setOwner(personService.getPersonsById(car.getOwner().getId()));
             carService.createCar(car);

@@ -82,6 +82,22 @@ public class Person {
         this.address = address;
     }
 
+    /**
+     * Initializes a new instance with the provided values.
+     * @param firstName First name of the person.
+     * @param lastName Last name of the person.
+     * @param phone Phone number of the person.
+     * @param address The address of the person.
+     * @param discount The discount of the person.
+     */
+    public Person(String firstName, String lastName, String phone, Address address, Discount discount) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.discount = discount;
+    }
+
 
     /**
      * Initializes a new instance with the provided values.

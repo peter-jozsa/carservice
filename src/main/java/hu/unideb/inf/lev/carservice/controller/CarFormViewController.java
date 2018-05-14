@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
  * A controller class which manages the view used to create/modify car entities.
  */
 public class CarFormViewController {
+    private static Logger logger = LoggerFactory.getLogger(CarFormViewController.class);
     /**
      * The service which is used to persist/retrieve cars.
      */
@@ -131,6 +134,8 @@ public class CarFormViewController {
     private void handleSaveBtnClick() {
         Car car = ConverterHelper.toModel(carViewModel);
         try {
+
+            logger.debug("Saving car...");
             if (car.getId() == null) {
                 service.createCar(car);
             } else {
@@ -139,8 +144,12 @@ public class CarFormViewController {
 
             MainViewController.getInstance().getCurrentStage().close();
         } catch (ValidationException e) {
+            logger.error("Could not store car entity: {}", car);
+            logger.error(e.getMessage());
             AlertHelper.getValidationErrorAlert(e).showAndWait();
         } catch (EntityNotFoundException e) {
+            logger.error("Could not store car entity: {}", car);
+            logger.error(e.getMessage());
             AlertHelper.showEntityNotFoundErrorAlert(e);
         }
     }

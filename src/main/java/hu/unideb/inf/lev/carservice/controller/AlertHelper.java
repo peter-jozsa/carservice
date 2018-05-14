@@ -4,12 +4,15 @@ import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
 import hu.unideb.inf.lev.carservice.service.exception.ValidationException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A helper class which has different static methods to help
  * the developer display returning alert windows.
  */
 final class AlertHelper {
+    private static Logger logger = LoggerFactory.getLogger(AlertHelper.class);
     /**
      * Private constructor to disable instantiation.
      */
@@ -25,6 +28,8 @@ final class AlertHelper {
         alert.setTitle("Ellenörzési hiba");
         alert.setHeaderText("Valami nem stimmel a tárolandó adatokkal:");
         alert.setContentText(ex.getMessage());
+
+        logger.debug("Validation dialog is initialized...");
 
         return alert;
     }
@@ -49,6 +54,8 @@ final class AlertHelper {
         alert.setTitle("Megerősítés");
         alert.setHeaderText(msg);
 
+        logger.debug("Cancellation confirmation dialog is going to be shown...");
+
         return alert.showAndWait().get() == ButtonType.OK;
     }
 
@@ -63,6 +70,8 @@ final class AlertHelper {
         alert.setTitle("Törlés megerősítése");
         alert.setHeaderText(msg);
 
+        logger.debug("Delete confirmation dialog is going to be shown...");
+
         return alert.showAndWait().get() == ButtonType.OK;
     }
 
@@ -76,6 +85,8 @@ final class AlertHelper {
         alert.setTitle("Adatbázis hiba");
         alert.setHeaderText("Keresett erőforrás nem található az adatbázisban!");
         alert.setContentText(ex.toString());
+
+        logger.debug("Entity not found error alert is going to be shown...");
 
         alert.showAndWait();
     }

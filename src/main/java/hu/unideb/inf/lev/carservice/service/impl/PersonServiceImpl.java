@@ -14,6 +14,7 @@ import hu.unideb.inf.lev.carservice.service.exception.ValidationException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A service class implementation which manages {@link Person} entities.
@@ -23,7 +24,13 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person getPersonsById(Long id) {
-        return personDAO.findById(id);
+        Person p = personDAO.findById(id);
+
+        if (p != null) {
+            removeExpiredDiscount(p);
+            return p;
+        }
+        return null;
     }
 
     @Override
@@ -55,7 +62,12 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> getAllPerson() {
-        return personDAO.getAll();
+        List<Person> list = personDAO.getAll();
+
+        list.stream()
+                .forEach(person -> removeExpiredDiscount(person));
+
+        return list;
     }
 
     @Override
@@ -117,7 +129,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public void increaseDiscountOfPerson(Person person) throws ValidationException, EntityNotFoundException {
+    public void increaseDiscountOfPerson(Person person) {
         Discount discount = person.getDiscount();
 
         if (discount != null) {
@@ -133,7 +145,16 @@ public class PersonServiceImpl implements PersonService {
 
         discount.setValidUntil(LocalDateTime.now().plusSeconds(WorksheetService.DISCOUNT_VALIDITY_TIME));
         person.setDiscount(discount);
+    }
 
-        updatePerson(person);
+    @Override
+    public void removeExpiredDiscount(Person person) {
+        if (person != null &&
+                person.getDiscount() != null &&
+                person.getDiscount().getValidUntil() != null &&
+                LocalDateTime.now().isAfter(person.getDiscount().getValidUntil())
+                ) {
+            person.setDiscount(null);
+        }
     }
 }
