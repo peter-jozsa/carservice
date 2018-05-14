@@ -24,6 +24,8 @@ public class Person {
 
     private Address address;
 
+    private Discount discount;
+
     public Person() {
     }
 
@@ -35,12 +37,23 @@ public class Person {
         this.address = address;
     }
 
+    public Person(Long id, String firstName, String lastName, String phone, Address address, Discount discount) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.address = address;
+        this.discount = discount;
+    }
+
     public Person(String firstName, String lastName, String phone, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.address = address;
     }
+
+
 
     public Person(String firstName, String lastName, String phone, List<Car> cars, Address address) {
         this.firstName = firstName;
@@ -88,6 +101,14 @@ public class Person {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
 
     @Override

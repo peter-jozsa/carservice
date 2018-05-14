@@ -14,38 +14,77 @@ import javafx.scene.control.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A controller class which takes care of listing cars.
+ */
 public class CarListViewController {
+    /**
+     * The service which is used to persist/retrieve data.
+     */
     private CarserviceService service = new CarserviceServiceImpl();
 
+    /**
+     * An observable list of cars.
+     */
     private ObservableList<CarViewModel> cars = FXCollections.observableArrayList();
 
+    /**
+     * The table view in which {@link #cars} are displayed.
+     */
     @FXML
     private TableView<CarViewModel> carTable;
 
+    /**
+     * The table column of registration number.
+     */
     @FXML
     private TableColumn<CarViewModel, String> registrationNumberColumn;
 
+    /**
+     * The table column of VIN.
+     */
     @FXML
     private TableColumn<CarViewModel, String> vinColumn;
 
+    /**
+     * The table column of brand.
+     */
     @FXML
     private TableColumn<CarViewModel, String> brandColumn;
 
+    /**
+     * The table column of car type.
+     */
     @FXML
     private TableColumn<CarViewModel, String> typeColumn;
 
+    /**
+     * The table column of owner of the car.
+     */
     @FXML
     private TableColumn<CarViewModel, String> ownerColumn;
 
+    /**
+     * The button used to modify a car entity.
+     */
     @FXML
     private Button modifyButton;
 
+    /**
+     * The button used to delete a car entity.
+     */
     @FXML
     private Button deleteButton;
 
+    /**
+     * The free-text search field.
+     */
     @FXML
     private TextField searchField;
 
+    /**
+     * Initializes the views, attaches event listeners and binds the view model to the controls.
+     */
     @FXML
     private void initialize() {
         refresh();
@@ -84,6 +123,10 @@ public class CarListViewController {
         });
     }
 
+    /**
+     * Propagates {@link #cars} based on the value of the {@link #searchField}.
+     * If the value is an empty string all cars are retrieved from the database, otherwise a text search is initiated.
+     */
     protected void refresh() {
         List<Car> carList;
         String searchStr = searchField.textProperty().getValue().trim();
@@ -100,15 +143,26 @@ public class CarListViewController {
         }
     }
 
+    /**
+     * Handles a car entity modification request by opening the form to edit it.
+     * @param car The view model of the car which is going to be modified.
+     */
     private void handleCarEditAction(CarViewModel car) {
         MainViewController.getInstance().modifyCar(ConverterHelper.toModel(car));
     }
 
+    /**
+     * Handles the click event of the 'new entity' button by opening the same form used for editing.
+     */
     @FXML
     private void handleNewBtnClick() {
         MainViewController.getInstance().createCar();
     }
 
+    /**
+     * Handles the click event of the modify button and calls {@link #handleCarEditAction(CarViewModel)} if there is
+     * a selected car in the table view.
+     */
     @FXML
     private void handleModifyBtnClick() {
         CarViewModel car = carTable.getSelectionModel().getSelectedItem();
@@ -117,6 +171,9 @@ public class CarListViewController {
         }
     }
 
+    /**
+     * Handles the click event of the delete button. It confirms the deletion request with a dialog.
+     */
     @FXML
     private void handleDeleteBtnClick() {
         CarViewModel car = carTable.getSelectionModel().getSelectedItem();

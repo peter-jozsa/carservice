@@ -1,9 +1,11 @@
 package hu.unideb.inf.lev.carservice.viewmodel;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableStringValue;
 
 public class CarViewModel {
     private Long id;
@@ -92,6 +94,15 @@ public class CarViewModel {
     public void setOwner(PersonViewModel owner) {
         this.owner.setValue(owner);
     }
+
+    public ObservableStringValue fullNameProperty() {
+        return Bindings.concat(registrationNumberProperty(), " (", brandProperty(), " ", typeProperty(), ")");
+    }
+
+    public String getFullName() {
+        return fullNameProperty().get();
+    }
+
 
     @Override
     public String toString() {

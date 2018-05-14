@@ -2,6 +2,7 @@ package hu.unideb.inf.lev.carservice.app;
 
 import hu.unideb.inf.lev.carservice.model.Address;
 import hu.unideb.inf.lev.carservice.model.Car;
+import hu.unideb.inf.lev.carservice.model.JobType;
 import hu.unideb.inf.lev.carservice.model.Person;
 import hu.unideb.inf.lev.carservice.service.CarserviceService;
 import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
@@ -42,10 +43,15 @@ public class MainApp extends Application {
         CarserviceService svc = new CarserviceServiceImpl();
         Person p = new Person("Péter", "Józsa", "003612134567", new Address("Magyarország", 4025, "Debrecen", "Piac utca 49-51."));
         Car c = new Car("PIY-936", "BMW", "E46 320i", "WAV456657556KK53716");
+        JobType j = new JobType("Olajcsere", Long.valueOf(10000));
+        JobType j2 = new JobType("Kerékcsere", Long.valueOf(4000));
 
         p.addCar(c);
 
         svc.createPerson(p);
+
+        svc.createJobType(j);
+        svc.createJobType(j2);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainPane.fxml"));
         primaryStage.setScene(new Scene(loader.load()));

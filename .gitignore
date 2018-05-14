@@ -13,3 +13,5 @@ buildNumber.properties
 
 .idea/
 carservice.iml
+
+.DS_Store

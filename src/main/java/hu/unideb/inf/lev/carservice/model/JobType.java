@@ -11,16 +11,20 @@ public class JobType {
     @Column(nullable = false)
     private String name;
 
+    private Long price;
+
     public JobType() {
     }
 
-    public JobType(Long id, String name) {
-        this.id = id;
+    public JobType(String name, Long price) {
         this.name = name;
+        this.price = price;
     }
 
-    public JobType(String name) {
+    public JobType(Long id, String name, Long price) {
+        this.id = id;
         this.name = name;
+        this.price = price;
     }
 
     public Long getId() {
@@ -39,11 +43,20 @@ public class JobType {
         this.name = name;
     }
 
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "JobType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

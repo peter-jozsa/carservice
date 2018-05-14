@@ -16,16 +16,34 @@ public class Worksheet {
     @ManyToMany
     private List<JobType> jobs;
 
+    private Long mileage;
+
+    private Long total;
+
+    private Integer discount;
+
     private LocalDateTime creationDate;
 
     public Worksheet() {
     }
 
-    public Worksheet(Car car, List<JobType> jobs, LocalDateTime creationDate) {
+    public Worksheet(Car car, List<JobType> jobs, Long mileage, Long total, Integer discount) {
         this.car = car;
         this.jobs = jobs;
-        this.creationDate = creationDate;
+        this.mileage = mileage;
+        this.total = total;
+        this.discount = discount;
     }
+
+    public Worksheet(Long id, Car car, List<JobType> jobs, Long mileage, Long total, Integer discount) {
+        this.id = id;
+        this.car = car;
+        this.jobs = jobs;
+        this.mileage = mileage;
+        this.total = total;
+        this.discount = discount;
+    }
+
 
     public Long getId() {
         return id;
@@ -43,6 +61,18 @@ public class Worksheet {
         return creationDate;
     }
 
+    public Long getMileage() {
+        return mileage;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,6 +87,18 @@ public class Worksheet {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public void setMileage(Long mileage) {
+        this.mileage = mileage;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 
     @Override

@@ -1,23 +1,25 @@
 package hu.unideb.inf.lev.carservice.service;
 
-import hu.unideb.inf.lev.carservice.dao.CarDAO;
-import hu.unideb.inf.lev.carservice.dao.DAOFactory;
-import hu.unideb.inf.lev.carservice.dao.JobTypeDAO;
-import hu.unideb.inf.lev.carservice.dao.PersonDAO;
-import hu.unideb.inf.lev.carservice.model.Address;
-import hu.unideb.inf.lev.carservice.model.Car;
-import hu.unideb.inf.lev.carservice.model.JobType;
-import hu.unideb.inf.lev.carservice.model.Person;
+import hu.unideb.inf.lev.carservice.dao.*;
+import hu.unideb.inf.lev.carservice.model.*;
 import hu.unideb.inf.lev.carservice.service.exception.EmptyFieldValueException;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
+import hu.unideb.inf.lev.carservice.service.exception.InvalidFieldValueException;
 import hu.unideb.inf.lev.carservice.service.exception.ValidationException;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CarserviceServiceImpl implements CarserviceService {
+    private static final int DISCOUNT_VALIDITY_TIME = 30*24*60*60;
+    private static final int DISCOUNT_MAX_VALUE = 40;
+    private static final int DISCOUNT_STEP_VALUE = 5;
+
     private CarDAO carDAO = DAOFactory.createCarDAO();
     private PersonDAO personDAO = DAOFactory.createPersonDAO();
     private JobTypeDAO jobTypeDAO = DAOFactory.createJobTypeDAO();
+    private WorksheetDAO worksheetDAO = DAOFactory.createWorksheetDAO();
 
     @Override
     public Person getPersonsById(Long id) {
@@ -43,6 +45,7 @@ public class CarserviceServiceImpl implements CarserviceService {
             personEntity.setLastName(person.getLastName());
             personEntity.setPhone(person.getPhone());
             personEntity.setAddress(person.getAddress());
+            personEntity.setDiscount(person.getDiscount());
 
             personDAO.update(personEntity);
         }
@@ -86,6 +89,13 @@ public class CarserviceServiceImpl implements CarserviceService {
 
         if (addr.getAddressLine() == null || addr.getAddressLine().trim().isEmpty()) {
             throw new EmptyFieldValueException(Address.class, "addressLine");
+        }
+
+        Discount discount = person.getDiscount();
+        if(discount != null) {
+            if (discount.getValue() < 0 || discount.getValue() > DISCOUNT_MAX_VALUE) {
+                throw new InvalidFieldValueException(Discount.class, "value");
+            }
         }
 
         return true;
@@ -228,5 +238,105 @@ public class CarserviceServiceImpl implements CarserviceService {
     @Override
     public List<Car> textSearchCar(String str) {
         return null;
+    }
+
+    @Override
+    public Worksheet getWorksheetById(Long id) {
+        return worksheetDAO.findById(id);
+    }
+
+    @Override
+    public void createWorksheet(Worksheet worksheet) throws ValidationException {
+        if (validateWorksheet(worksheet)) {
+            worksheet.setCreationDate(LocalDateTime.now());
+            if (worksheet.getCar().getOwner().getDiscount() != null) {
+                worksheet.setDiscount(worksheet.getCar().getOwner().getDiscount().getValue());
+            }
+
+            worksheetDAO.create(worksheet);
+            increaseDiscountOfPerson(worksheet.getCar().getOwner());
+        }
+    }
+
+    @Override
+    public void updateWorksheet(Worksheet worksheet) throws ValidationException, EntityNotFoundException {
+        if (validateWorksheet(worksheet)) {
+            Worksheet entity = worksheetDAO.findById(worksheet.getId());
+            if (entity == null) {
+                throw new EntityNotFoundException("Worksheet entity (id=" + worksheet.getId() + ") does not exist!");
+            }
+
+            entity.setCar(worksheet.getCar());
+            entity.setJobs(worksheet.getJobs());
+            entity.setTotal(worksheet.getTotal());
+            entity.setDiscount(worksheet.getDiscount());
+
+            worksheetDAO.update(entity);
+        }
+    }
+
+    @Override
+    public void deleteWorksheetById(Long id) throws EntityNotFoundException {
+        Worksheet entity = worksheetDAO.findById(id);
+        if (entity == null) {
+            throw new EntityNotFoundException("Worksheet entity (id=" + id + ") does not exist!");
+        }
+
+        worksheetDAO.delete(entity);
+    }
+
+    @Override
+    public boolean validateWorksheet(Worksheet worksheet) throws ValidationException {
+        if (worksheet == null) {
+            return false;
+        }
+
+        if (worksheet.getCar() == null) {
+            throw new EmptyFieldValueException(Worksheet.class, "car");
+        }
+
+        if (worksheet.getDiscount() < 0 || worksheet.getDiscount() > 40) {
+            throw new InvalidFieldValueException(Worksheet.class, "discount");
+        }
+
+        if (worksheet.getTotal() < 0) {
+            throw new InvalidFieldValueException(Worksheet.class, "total");
+        }
+
+        return true;
+    }
+
+    @Override
+    public List<Worksheet> getAllWorksheet() {
+        return worksheetDAO.getAll();
+    }
+
+    @Override
+    public List<Worksheet> textSearchWorksheet(String str) {
+        return null;
+    }
+
+    private void increaseDiscountOfPerson(Person person) throws ValidationException {
+        Discount discount = person.getDiscount();
+
+        if (discount != null) {
+            discount.setValue(discount.getValue() + DISCOUNT_STEP_VALUE);
+            discount.setValidUntil(LocalDateTime.now().plusSeconds(DISCOUNT_VALIDITY_TIME));
+
+            if (discount.getValue() >= DISCOUNT_MAX_VALUE) {
+                discount.setValue(DISCOUNT_MAX_VALUE);
+            }
+        } else {
+            discount = new Discount(DISCOUNT_STEP_VALUE);
+        }
+
+        discount.setValidUntil(LocalDateTime.now().plusSeconds(DISCOUNT_VALIDITY_TIME));
+        person.setDiscount(discount);
+
+        try {
+            updatePerson(person);
+        } catch (EntityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

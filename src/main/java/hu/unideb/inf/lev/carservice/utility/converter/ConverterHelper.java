@@ -1,25 +1,21 @@
 package hu.unideb.inf.lev.carservice.utility.converter;
 
-import hu.unideb.inf.lev.carservice.model.Address;
-import hu.unideb.inf.lev.carservice.model.Car;
-import hu.unideb.inf.lev.carservice.model.JobType;
-import hu.unideb.inf.lev.carservice.model.Person;
-import hu.unideb.inf.lev.carservice.utility.converter.impl.AddressConverterImpl;
-import hu.unideb.inf.lev.carservice.utility.converter.impl.CarConverterImpl;
-import hu.unideb.inf.lev.carservice.utility.converter.impl.JobTypeConverterImpl;
-import hu.unideb.inf.lev.carservice.utility.converter.impl.PersonConverterImpl;
-import hu.unideb.inf.lev.carservice.viewmodel.AddressViewModel;
-import hu.unideb.inf.lev.carservice.viewmodel.CarViewModel;
-import hu.unideb.inf.lev.carservice.viewmodel.JobTypeViewModel;
-import hu.unideb.inf.lev.carservice.viewmodel.PersonViewModel;
+import hu.unideb.inf.lev.carservice.model.*;
+import hu.unideb.inf.lev.carservice.utility.converter.impl.*;
+import hu.unideb.inf.lev.carservice.viewmodel.*;
+import org.hibernate.sql.Select;
 
 import java.util.List;
 
 public class ConverterHelper {
     private static PersonConverter personConverter = new PersonConverterImpl();
+    private static DiscountConverter discountConverter = new DiscountConverterImpl();
     private static AddressConverter addressConverter = new AddressConverterImpl();
     private static JobTypeConverter jobTypeConverter = new JobTypeConverterImpl();
     private static CarConverter carConverter = new CarConverterImpl();
+    private static WorksheetConverter worksheetConverter = new WorksheetConverterImpl();
+
+    private ConverterHelper() {}
 
     public static PersonViewModel fromModel(Person model) {
         return personConverter.fromModel(model);
@@ -37,6 +33,14 @@ public class ConverterHelper {
         return carConverter.fromModel(car);
     }
 
+    public static WorksheetViewModel fromModel(Worksheet model) {
+        return worksheetConverter.fromModel(model);
+    }
+
+    public static DiscountViewModel fromModel(Discount model) {
+        return discountConverter.fromModel(model);
+    }
+
     public static Person toModel(PersonViewModel viewModel) {
         return personConverter.toModel(viewModel);
     }
@@ -51,5 +55,13 @@ public class ConverterHelper {
 
     public static Car toModel(CarViewModel viewModel) {
         return carConverter.toModel(viewModel);
+    }
+
+    public static Worksheet toModel(WorksheetViewModel viewModel) {
+        return worksheetConverter.toModel(viewModel);
+    }
+
+    public static Discount toModel(DiscountViewModel viewModel) {
+        return discountConverter.toModel(viewModel);
     }
 }

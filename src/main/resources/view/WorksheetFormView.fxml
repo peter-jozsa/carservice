@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="366.0" prefWidth="469.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.lev.carservice.controller.WorksheetFormViewController">
+    <children>
+        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" valignment="TOP" vgrow="NEVER" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="NEVER" />
+            </rowConstraints>
+            <children>
+            <TitledPane text="Alapadatok">
+               <content>
+                      <GridPane>
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                              <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="250.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="250.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <Label text="Autó">
+                                  <GridPane.margin>
+                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                  </GridPane.margin>
+                              </Label>
+                              <ComboBox fx:id="carDropDown" prefWidth="150.0" promptText="Válassz" GridPane.columnIndex="1" />
+                        <Label text="Végösszeg" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="totalLabel" text="0 Ft" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="discountLabel" text="0%" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label text="Kedvezmény" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Tulajdonos" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="ownerLabel" text="-" GridPane.columnIndex="3">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                          </children>
+                      </GridPane>
+               </content>
+            </TitledPane>
+                <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="2">
+                    <buttons>
+                        <Button cancelButton="true" mnemonicParsing="false" onAction="#handleCancelBtnClick" text="Mégse" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSaveBtnClick" text="Mentés" />
+                    </buttons>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+                </ButtonBar>
+            <TitledPane text="Elvégzett munkák" GridPane.rowIndex="1">
+               <content>
+                  <TableView fx:id="jobTypeTable" editable="true" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="checkboxColumn" maxWidth="30.0" prefWidth="27.0" sortable="false" text="✓" />
+                        <TableColumn fx:id="jobNameColumn" prefWidth="200.0" text="Munka" />
+                    </columns>
+                  </TableView>
+               </content>
+            </TitledPane>
+            </children>
+        </GridPane>
+    </children>
+    <padding>
+        <Insets top="10.0" />
+    </padding>
+</AnchorPane>

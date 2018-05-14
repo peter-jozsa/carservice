@@ -19,7 +19,8 @@ public class PersonConverterImpl implements PersonConverter {
                 new SimpleStringProperty(model.getFirstName()),
                 new SimpleStringProperty(model.getLastName()),
                 new SimpleStringProperty(model.getPhone()),
-                ConverterHelper.fromModel(model.getAddress())
+                ConverterHelper.fromModel(model.getAddress()),
+                ConverterHelper.fromModel(model.getDiscount())
         );
     }
 
@@ -34,7 +35,8 @@ public class PersonConverterImpl implements PersonConverter {
                 viewModel.getFirstName(),
                 viewModel.getLastName(),
                 viewModel.getPhone(),
-                ConverterHelper.toModel(viewModel.getAddress())
+                ConverterHelper.toModel(viewModel.getAddress()),
+                ConverterHelper.toModel(viewModel.getDiscount())
         );
     }
 }

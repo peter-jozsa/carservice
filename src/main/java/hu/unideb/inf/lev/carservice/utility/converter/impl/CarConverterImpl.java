@@ -10,6 +10,10 @@ import javafx.beans.property.SimpleStringProperty;
 public class CarConverterImpl implements CarConverter {
     @Override
     public CarViewModel fromModel(Car model) {
+        if (model == null) {
+            return null;
+        }
+
         return new CarViewModel(
                 model.getId(),
                 new SimpleStringProperty(model.getRegistrationNumber()),
@@ -22,6 +26,10 @@ public class CarConverterImpl implements CarConverter {
 
     @Override
     public Car toModel(CarViewModel viewModel) {
+        if (viewModel == null) {
+            return null;
+        }
+
         return new Car(
                 viewModel.getId(),
                 viewModel.getRegistrationNumber(),

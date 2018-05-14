@@ -37,6 +37,10 @@ public class PersonFormViewController {
     @FXML
     private TextField addressLineField;
 
+    /**
+     * Sets the currently modified person entity.
+     * @param person The person entity which should be loaded into the form.
+     */
     public void setPerson(Person person) {
         personViewModel = ConverterHelper.fromModel(person);
 

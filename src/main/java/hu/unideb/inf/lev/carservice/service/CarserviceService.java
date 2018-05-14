@@ -3,10 +3,12 @@ package hu.unideb.inf.lev.carservice.service;
 import hu.unideb.inf.lev.carservice.model.Car;
 import hu.unideb.inf.lev.carservice.model.JobType;
 import hu.unideb.inf.lev.carservice.model.Person;
+import hu.unideb.inf.lev.carservice.model.Worksheet;
 import hu.unideb.inf.lev.carservice.service.exception.EmptyFieldValueException;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
 import hu.unideb.inf.lev.carservice.service.exception.ValidationException;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 public interface CarserviceService {
@@ -33,4 +35,12 @@ public interface CarserviceService {
     boolean validateCar(Car car) throws ValidationException;
     List<Car> getAllCar();
     List<Car> textSearchCar(String str);
+
+    Worksheet getWorksheetById(Long id);
+    void createWorksheet(Worksheet worksheet) throws ValidationException;
+    void updateWorksheet(Worksheet worksheet) throws ValidationException, EntityNotFoundException;
+    void deleteWorksheetById(Long id) throws EntityNotFoundException;
+    boolean validateWorksheet(Worksheet worksheet) throws ValidationException;
+    List<Worksheet> getAllWorksheet();
+    List<Worksheet> textSearchWorksheet(String str);
 }

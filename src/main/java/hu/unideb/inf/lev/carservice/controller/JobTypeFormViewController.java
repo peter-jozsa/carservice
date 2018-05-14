@@ -19,6 +19,13 @@ public class JobTypeFormViewController {
     @FXML
     private TextField nameField;
 
+    @FXML
+    private TextField priceField;
+
+    /**
+     * Sets the currently modified job type entity.
+     * @param jobType The job type entity which should be loaded into the form.
+     */
     public void setJobType(JobType jobType) {
         jobTypeViewModel = ConverterHelper.fromModel(jobType);
 
@@ -28,9 +35,21 @@ public class JobTypeFormViewController {
     @FXML
     private void initialize() {
         nameField.textProperty().unbind();
+        priceField.textProperty().unbind();
 
         if (jobTypeViewModel != null) {
             nameField.textProperty().bindBidirectional(jobTypeViewModel.nameProperty());
+            priceField.textProperty().bindBidirectional(jobTypeViewModel.priceProperty(), new StringConverter<Number>() {
+                @Override
+                public String toString(Number object) {
+                    return object.toString();
+                }
+
+                @Override
+                public Number fromString(String string) {
+                    return Long.parseLong(string);
+                }
+            });
         }
     }
 

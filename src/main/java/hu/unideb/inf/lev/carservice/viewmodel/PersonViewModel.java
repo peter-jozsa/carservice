@@ -15,23 +15,26 @@ public class PersonViewModel {
     private StringProperty lastName = new SimpleStringProperty();
     private StringProperty phone = new SimpleStringProperty();
     private AddressViewModel address = new AddressViewModel();
+    private DiscountViewModel discount = new DiscountViewModel();
 
     public PersonViewModel() {
     }
 
-    public PersonViewModel(Long id, StringProperty firstName, StringProperty lastName, StringProperty phone, AddressViewModel address) {
+    public PersonViewModel(Long id, StringProperty firstName, StringProperty lastName, StringProperty phone, AddressViewModel address, DiscountViewModel discount) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.address = address;
+        this.discount = discount;
     }
 
-    public PersonViewModel(StringProperty firstName, StringProperty lastName, StringProperty phone, AddressViewModel address) {
+    public PersonViewModel(StringProperty firstName, StringProperty lastName, StringProperty phone, AddressViewModel address, DiscountViewModel discount) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.address = address;
+        this.discount = discount;
     }
 
     public Long getId() {
@@ -92,6 +95,14 @@ public class PersonViewModel {
 
     public void setAddress(AddressViewModel address) {
         this.address = address;
+    }
+
+    public DiscountViewModel getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(DiscountViewModel discount) {
+        this.discount = discount;
     }
 
     @Override
