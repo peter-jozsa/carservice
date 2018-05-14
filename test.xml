@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+    <persons>
+        <person>
+            <firstName>Elek</firstName>
+            <lastName>Teszt</lastName>
+            <phone>06301234567</phone>
+            <address>
+                <country>Magyarország</country>
+                <zip>4031</zip>
+                <city>Debrecen</city>
+                <addressLine>Kishegyesi út 16.</addressLine>
+            </address>
+            <discount>
+                <value>5</value>
+                <validUntil>2018-05-20 16:30:00</validUntil>
+            </discount>
+        </person>
+        <person>
+            <firstName>Gábor</firstName>
+            <lastName>Kiss</lastName>
+            <phone>+3620456432</phone>
+            <address>
+                <country>Magyarország</country>
+                <zip>4025</zip>
+                <city>Debrecen</city>
+                <addressLine>Piac utca 49-51.</addressLine>
+            </address>
+        </person>
+    </persons>
+    <cars>
+        <car>
+            <registrationNumber>HLG-819</registrationNumber>
+            <brand>Opel</brand>
+            <type>Astra G</type>
+            <VIN>AS3847FS1375997</VIN>
+            <owner id="2" />
+        </car>
+        <car>
+            <registrationNumber>JKL-235</registrationNumber>
+            <brand>Ford</brand>
+            <type>Fiesta</type>
+            <VIN>LK3859LS123469876</VIN>
+            <owner id="2" />
+        </car>
+        <car>
+            <registrationNumber>PIY-936</registrationNumber>
+            <brand>BMW</brand>
+            <type>320i</type>
+            <VIN>WAV328KK53716</VIN>
+            <owner id="1" />
+        </car>
+    </cars>
+    <jobTypes>
+        <jobType>
+            <name>Olajcsere</name>
+            <price>8000</price>
+        </jobType>
+        <jobType>
+            <name>Kerékcsere</name>
+            <price>4000</price>
+        </jobType>
+        <jobType>
+            <name>Szelepfedél tömítés csere</name>
+            <price>14000</price>
+        </jobType>
+        <jobType>
+            <name>Olajszűrő csere</name>
+            <price>2000</price>
+        </jobType>
+        <jobType>
+            <name>Pollenszűrő csere</name>
+            <price>1500</price>
+        </jobType>
+        <jobType>
+            <name>Kuplungtárcsa csere</name>
+            <price>70000</price>
+        </jobType>
+        <jobType>
+            <name>Első lengőkar csere</name>
+            <price>30000</price>
+        </jobType>
+        <jobType>
+            <name>Hátsó lengőkar csere</name>
+            <price>45000</price>
+        </jobType>
+        <jobType>
+            <name>Kormányösszekötő rudazat csere</name>
+            <price>25000</price>
+        </jobType>
+    </jobTypes>
+    <worksheets>
+        <worksheet>
+            <car id="3" />
+            <jobs>
+                <job id="1" />
+                <job id="4" />
+                <job id="5" />
+            </jobs>
+            <total>10925</total>
+            <discount>5</discount>
+        </worksheet>
+    </worksheets>
+</service>

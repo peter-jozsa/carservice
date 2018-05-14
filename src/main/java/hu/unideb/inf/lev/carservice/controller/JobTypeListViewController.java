@@ -1,9 +1,9 @@
 package hu.unideb.inf.lev.carservice.controller;
 
 import hu.unideb.inf.lev.carservice.model.JobType;
-import hu.unideb.inf.lev.carservice.service.CarserviceService;
-import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
+import hu.unideb.inf.lev.carservice.service.JobTypeService;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
+import hu.unideb.inf.lev.carservice.service.impl.ServiceFactory;
 import hu.unideb.inf.lev.carservice.utility.converter.ConverterHelper;
 import hu.unideb.inf.lev.carservice.viewmodel.JobTypeViewModel;
 import javafx.collections.FXCollections;
@@ -14,8 +14,11 @@ import javafx.scene.control.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A controller class which takes care of listing job type entities.
+ */
 public class JobTypeListViewController {
-    private CarserviceService service = new CarserviceServiceImpl();
+    private JobTypeService service = ServiceFactory.createJobTypeService();
 
     private ObservableList<JobTypeViewModel> jobTypes = FXCollections.observableArrayList();
 
@@ -68,6 +71,10 @@ public class JobTypeListViewController {
         });
     }
 
+    /**
+     * Propagates {@link #jobTypes} based on the value of the {@link #searchField}.
+     * If the value is an empty string all job types are retrieved from the database, otherwise a text search is initiated.
+     */
     protected void refresh() {
         List<JobType> jobTypeList;
         String searchStr = searchField.textProperty().getValue().trim();

@@ -6,6 +6,9 @@ import hu.unideb.inf.lev.carservice.utility.EntityManagerFactoryHelper;
 
 import java.util.List;
 
+/**
+ * This class implements the {@link PersonDAO} interface.
+ */
 public class PersonDAOImpl extends GenericDAOImpl<Person, Long> implements PersonDAO {
     @Override
     public List<Person> findAllByName(String name) {

@@ -8,6 +8,9 @@
     <artifactId>carservice</artifactId>
     <version>1.0</version>
 
+    <name>CarService</name>
+    <description>Egy alkalmazás amely egy szerelő műhely egyszerűsített munkafolyamatait szolgálja ki.</description>
+
     <properties>
         <mainClass>hu.unideb.inf.lev.carservice.app.MainApp</mainClass>
         <maven.compiler.source>1.8</maven.compiler.source>

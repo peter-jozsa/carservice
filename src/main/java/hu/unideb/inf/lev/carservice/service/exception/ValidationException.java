@@ -1,22 +1,14 @@
 package hu.unideb.inf.lev.carservice.service.exception;
 
+/**
+ * The abstract class of exceptions, which describe an entity validation error.
+ */
 public abstract class ValidationException extends Exception {
-    public ValidationException() {
-    }
-
+    /**
+     * Initializes the exception with a provided error message.
+     * @param message A human-readable error message.
+     */
     public ValidationException(String message) {
         super(message);
-    }
-
-    public ValidationException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public ValidationException(Throwable cause) {
-        super(cause);
-    }
-
-    public ValidationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

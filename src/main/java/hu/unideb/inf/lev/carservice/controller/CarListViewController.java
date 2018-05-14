@@ -1,9 +1,9 @@
 package hu.unideb.inf.lev.carservice.controller;
 
 import hu.unideb.inf.lev.carservice.model.Car;
-import hu.unideb.inf.lev.carservice.service.CarserviceService;
-import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
+import hu.unideb.inf.lev.carservice.service.CarService;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
+import hu.unideb.inf.lev.carservice.service.impl.ServiceFactory;
 import hu.unideb.inf.lev.carservice.utility.converter.ConverterHelper;
 import hu.unideb.inf.lev.carservice.viewmodel.CarViewModel;
 import javafx.collections.FXCollections;
@@ -21,7 +21,7 @@ public class CarListViewController {
     /**
      * The service which is used to persist/retrieve data.
      */
-    private CarserviceService service = new CarserviceServiceImpl();
+    private CarService service = ServiceFactory.createCarService();
 
     /**
      * An observable list of cars.

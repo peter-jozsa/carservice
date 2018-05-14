@@ -4,7 +4,6 @@ import hu.unideb.inf.lev.carservice.model.Discount;
 import hu.unideb.inf.lev.carservice.utility.converter.DiscountConverter;
 import hu.unideb.inf.lev.carservice.viewmodel.DiscountViewModel;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
 
 public class DiscountConverterImpl implements DiscountConverter {
     @Override

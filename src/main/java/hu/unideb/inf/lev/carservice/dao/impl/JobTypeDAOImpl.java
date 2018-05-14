@@ -7,6 +7,9 @@ import hu.unideb.inf.lev.carservice.utility.EntityManagerFactoryHelper;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * This class implements the {@link JobTypeDAO} interface.
+ */
 public class JobTypeDAOImpl extends GenericDAOImpl<JobType, Long> implements JobTypeDAO {
     @Override
     public List<JobType> findByName(String name) {

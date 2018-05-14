@@ -1,27 +1,25 @@
 package hu.unideb.inf.lev.carservice.controller;
 
-import hu.unideb.inf.lev.carservice.model.Person;
 import hu.unideb.inf.lev.carservice.model.Worksheet;
-import hu.unideb.inf.lev.carservice.service.CarserviceService;
-import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
+import hu.unideb.inf.lev.carservice.service.WorksheetService;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
+import hu.unideb.inf.lev.carservice.service.impl.ServiceFactory;
 import hu.unideb.inf.lev.carservice.utility.converter.ConverterHelper;
-import hu.unideb.inf.lev.carservice.viewmodel.PersonViewModel;
 import hu.unideb.inf.lev.carservice.viewmodel.WorksheetViewModel;
-import javafx.beans.property.ReadOnlyLongWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.util.StringConverter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A controller class which takes care of listing worksheet entities.
+ */
 public class WorksheetListViewController {
-    private CarserviceService service = new CarserviceServiceImpl();
+    private WorksheetService service = ServiceFactory.createWorksheetService();
 
     private ObservableList<WorksheetViewModel> worksheets = FXCollections.observableArrayList();
 
@@ -82,6 +80,10 @@ public class WorksheetListViewController {
         });
     }
 
+    /**
+     * Propagates {@link #worksheets} based on the value of the {@link #searchField}.
+     * If the value is an empty string all worksheets eare retrieved from the database, otherwise a text search is initiated.
+     */
     protected void refresh() {
         List<Worksheet> worksheetList;
         String searchStr = searchField.textProperty().getValue().trim();

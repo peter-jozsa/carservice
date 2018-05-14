@@ -3,18 +3,17 @@ package hu.unideb.inf.lev.carservice.controller;
 import hu.unideb.inf.lev.carservice.model.Car;
 import hu.unideb.inf.lev.carservice.model.JobType;
 import hu.unideb.inf.lev.carservice.model.Worksheet;
-import hu.unideb.inf.lev.carservice.service.CarserviceService;
-import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
+import hu.unideb.inf.lev.carservice.service.CarService;
+import hu.unideb.inf.lev.carservice.service.JobTypeService;
+import hu.unideb.inf.lev.carservice.service.WorksheetService;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
 import hu.unideb.inf.lev.carservice.service.exception.ValidationException;
+import hu.unideb.inf.lev.carservice.service.impl.ServiceFactory;
 import hu.unideb.inf.lev.carservice.utility.converter.ConverterHelper;
 import hu.unideb.inf.lev.carservice.viewmodel.CarViewModel;
 import hu.unideb.inf.lev.carservice.viewmodel.JobTypeViewModel;
 import hu.unideb.inf.lev.carservice.viewmodel.SelectableJobTypeViewModel;
 import hu.unideb.inf.lev.carservice.viewmodel.WorksheetViewModel;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,14 +22,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A controller class which manages the view used to create/modify worksheet entities.
+ */
 public class WorksheetFormViewController {
-    private CarserviceService service = new CarserviceServiceImpl();
+    private WorksheetService service = ServiceFactory.createWorksheetService();
+    private CarService carService = ServiceFactory.createCarService();
+    private JobTypeService jobTypeService = ServiceFactory.createJobTypeService();
     private WorksheetViewModel worksheetViewModel = new WorksheetViewModel();
     private ObservableList<CarViewModel> observableCars = FXCollections.observableArrayList();
     private ObservableList<SelectableJobTypeViewModel> observableJobTypes = FXCollections.observableArrayList();
@@ -68,8 +71,8 @@ public class WorksheetFormViewController {
 
     @FXML
     private void initialize() {
-        List<Car> cars = service.getAllCar();
-        List<JobType> jobTypes = service.getAllJobType();
+        List<Car> cars = carService.getAllCar();
+        List<JobType> jobTypes = jobTypeService.getAllJobType();
 
         ownerLabel.textProperty().unbind();
         carDropDown.valueProperty().unbind();

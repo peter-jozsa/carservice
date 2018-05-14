@@ -8,9 +8,17 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * This generic class implements all basic methods needed for general entity management.
+ * @param <T> This DAO should work with this type of entities.
+ * @param <Id> The type of unique identifier of the entities.
+ */
 public abstract class GenericDAOImpl<T, Id extends Serializable> implements hu.unideb.inf.lev.carservice.dao.GenericDAO<T, Id> {
     private Class<T> type;
 
+    /**
+     * Parameter-less constructor.
+     */
     public GenericDAOImpl() {
         Type t = getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) t;

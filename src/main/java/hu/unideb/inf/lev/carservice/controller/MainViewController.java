@@ -39,7 +39,8 @@ public class MainViewController {
 
     /**
      * Constructor of the <code>MainViewController</code> which sets the {@link #instance} value to the freshly
-     * constructed instance and throws a RuntimeException if its value is other than <code>null</code>
+     * constructed instance.
+     * @throws RuntimeException if another instance of <code>MainViewController</code> was constructed previously.
      */
     public MainViewController() {
         if (instance != null) {
@@ -89,6 +90,7 @@ public class MainViewController {
 
     /**
      * Shows the form used to create/edit persons in a new window.
+     * @param person The person entity to be modified.
      */
     public void modifyPerson(Person person) {
         Parent root;
@@ -138,6 +140,7 @@ public class MainViewController {
 
     /**
      * Shows the form used to create/edit job types in a new window.
+     * @param jobType The job type entity to be modified.
      */
     public void modifyJobType(JobType jobType) {
         Parent root;
@@ -187,6 +190,7 @@ public class MainViewController {
 
     /**
      * Shows the form used to create/edit cars in a new window.
+     * @param car The car entity to be modified.
      */
     public void modifyCar(Car car) {
         Parent root;
@@ -236,6 +240,7 @@ public class MainViewController {
 
     /**
      * Shows the form used to create/edit worksheets in a new window.
+     * @param worksheet The worksheet entity to be modified.
      */
     public void modifyWorksheet(Worksheet worksheet) {
         Parent root;

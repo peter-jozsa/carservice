@@ -2,10 +2,11 @@ package hu.unideb.inf.lev.carservice.controller;
 
 import hu.unideb.inf.lev.carservice.model.Car;
 import hu.unideb.inf.lev.carservice.model.Person;
-import hu.unideb.inf.lev.carservice.service.CarserviceService;
-import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
+import hu.unideb.inf.lev.carservice.service.CarService;
+import hu.unideb.inf.lev.carservice.service.PersonService;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
 import hu.unideb.inf.lev.carservice.service.exception.ValidationException;
+import hu.unideb.inf.lev.carservice.service.impl.ServiceFactory;
 import hu.unideb.inf.lev.carservice.utility.converter.ConverterHelper;
 import hu.unideb.inf.lev.carservice.viewmodel.CarViewModel;
 import hu.unideb.inf.lev.carservice.viewmodel.PersonViewModel;
@@ -24,9 +25,14 @@ import java.util.stream.Collectors;
  */
 public class CarFormViewController {
     /**
-     * The service which is used to persist/retrieve data.
+     * The service which is used to persist/retrieve cars.
      */
-    private CarserviceService service = new CarserviceServiceImpl();
+    private CarService service = ServiceFactory.createCarService();
+
+    /**
+     * The service which is used to persist/retrieve persons.
+     */
+    private PersonService personService = ServiceFactory.createPersonService();
 
     /**
      * The view model of the entity which is being created/modified.
@@ -84,7 +90,7 @@ public class CarFormViewController {
      */
     @FXML
     private void initialize() {
-        List<Person> persons = service.getAllPerson();
+        List<Person> persons = personService.getAllPerson();
 
         observablePersons.clear();
         observablePersons.addAll(persons.stream().map(m -> ConverterHelper.fromModel(m)).collect(Collectors.toList()));

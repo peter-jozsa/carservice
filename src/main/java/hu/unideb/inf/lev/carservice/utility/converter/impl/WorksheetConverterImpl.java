@@ -24,7 +24,6 @@ public class WorksheetConverterImpl implements WorksheetConverter {
                                         .collect(Collectors.toList())
                         )
                 ),
-                new SimpleLongProperty(model.getMileage()),
                 new SimpleLongProperty(model.getTotal()),
                 new SimpleIntegerProperty(model.getDiscount())
         );
@@ -36,7 +35,6 @@ public class WorksheetConverterImpl implements WorksheetConverter {
                 viewModel.getId(),
                 ConverterHelper.toModel(viewModel.getCar()),
                 viewModel.getJobs().stream().map(vm -> ConverterHelper.toModel(vm)).collect(Collectors.toList()),
-                viewModel.getMileage(),
                 viewModel.getTotal(),
                 viewModel.getDiscount()
         );

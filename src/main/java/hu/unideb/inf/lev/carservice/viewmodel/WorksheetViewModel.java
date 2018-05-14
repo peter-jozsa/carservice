@@ -3,7 +3,6 @@ package hu.unideb.inf.lev.carservice.viewmodel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.*;
-import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,26 +11,23 @@ public class WorksheetViewModel {
     private Long id;
     private ObjectProperty<CarViewModel> car = new SimpleObjectProperty<>();
     private List<JobTypeViewModel> jobs = new ArrayList<>();
-    private LongProperty mileage = new SimpleLongProperty(0);
     private LongProperty total = new SimpleLongProperty(0);
     private IntegerProperty discount = new SimpleIntegerProperty(0);
 
     public WorksheetViewModel() {
     }
 
-    public WorksheetViewModel(Long id, ObjectProperty<CarViewModel> car, List<JobTypeViewModel> jobs, LongProperty mileage, LongProperty total, IntegerProperty discount) {
+    public WorksheetViewModel(Long id, ObjectProperty<CarViewModel> car, List<JobTypeViewModel> jobs, LongProperty total, IntegerProperty discount) {
         this.id = id;
         this.car = car;
         this.jobs = jobs;
-        this.mileage = mileage;
         this.total = total;
         this.discount = discount;
     }
 
-    public WorksheetViewModel(ObjectProperty<CarViewModel> car, List<JobTypeViewModel> jobs, LongProperty mileage, LongProperty total, IntegerProperty discount) {
+    public WorksheetViewModel(ObjectProperty<CarViewModel> car, List<JobTypeViewModel> jobs, LongProperty total, IntegerProperty discount) {
         this.car = car;
         this.jobs = jobs;
-        this.mileage = mileage;
         this.total = total;
         this.discount = discount;
     }
@@ -54,18 +50,6 @@ public class WorksheetViewModel {
 
     public void setJobs(List<JobTypeViewModel> jobs) {
         this.jobs = jobs;
-    }
-
-    public long getMileage() {
-        return mileage.get();
-    }
-
-    public LongProperty mileageProperty() {
-        return mileage;
-    }
-
-    public void setMileage(long mileage) {
-        this.mileage.set(mileage);
     }
 
     public long getTotal() {

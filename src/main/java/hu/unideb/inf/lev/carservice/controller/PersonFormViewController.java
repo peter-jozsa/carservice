@@ -1,19 +1,21 @@
 package hu.unideb.inf.lev.carservice.controller;
 
-import hu.unideb.inf.lev.carservice.app.MainApp;
 import hu.unideb.inf.lev.carservice.model.Person;
-import hu.unideb.inf.lev.carservice.service.CarserviceService;
-import hu.unideb.inf.lev.carservice.service.CarserviceServiceImpl;
+import hu.unideb.inf.lev.carservice.service.PersonService;
 import hu.unideb.inf.lev.carservice.service.exception.EntityNotFoundException;
 import hu.unideb.inf.lev.carservice.service.exception.ValidationException;
+import hu.unideb.inf.lev.carservice.service.impl.ServiceFactory;
 import hu.unideb.inf.lev.carservice.utility.converter.ConverterHelper;
 import hu.unideb.inf.lev.carservice.viewmodel.PersonViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
+/**
+ * A controller class which manages the view used to create/modify job type entities.
+ */
 public class PersonFormViewController {
-    private CarserviceService service = new CarserviceServiceImpl();
+    private PersonService service = ServiceFactory.createPersonService();
     private PersonViewModel personViewModel = new PersonViewModel();
 
     @FXML
