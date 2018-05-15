@@ -42,9 +42,6 @@ public class WorksheetListViewController {
     private Button deleteButton;
 
     @FXML
-    private TextField searchField;
-
-    @FXML
     private void initialize() {
         refresh();
 
@@ -74,25 +71,13 @@ public class WorksheetListViewController {
         carColumn.setCellValueFactory(features -> features.getValue().getCar().fullNameProperty());
         ownerColumn.setCellValueFactory(features -> features.getValue().getCar().getOwner().fullNameProperty());
         totalColumn.setCellValueFactory(param -> new SimpleStringProperty(Long.toString(param.getValue().getTotal())));
-
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            refresh();
-        });
     }
 
     /**
-     * Propagates {@link #worksheets} based on the value of the {@link #searchField}.
-     * If the value is an empty string all worksheets eare retrieved from the database, otherwise a text search is initiated.
+     * Propagates {@link #worksheets} with worksheet entities.
      */
     protected void refresh() {
-        List<Worksheet> worksheetList;
-        String searchStr = searchField.textProperty().getValue().trim();
-
-        if (!searchStr.isEmpty()) {
-            worksheetList = service.textSearchWorksheet(searchStr);
-        } else {
-            worksheetList = service.getAllWorksheet();
-        }
+        List<Worksheet> worksheetList = service.getAllWorksheet();
 
         worksheets.clear();
         if(worksheetList != null && worksheetList.size() > 0) {

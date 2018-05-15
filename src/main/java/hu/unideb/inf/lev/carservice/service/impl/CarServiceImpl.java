@@ -84,6 +84,6 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> textSearchCar(String str) {
-        return null;
+        return carDAO.findByString(str);
     }
 }

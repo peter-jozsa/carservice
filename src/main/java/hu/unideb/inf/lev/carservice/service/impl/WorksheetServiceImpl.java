@@ -95,11 +95,6 @@ public class WorksheetServiceImpl implements WorksheetService {
     }
 
     @Override
-    public List<Worksheet> textSearchWorksheet(String str) {
-        return null;
-    }
-
-    @Override
     public long calculateJobSum(Worksheet worksheet) {
         return worksheet.getJobs()
                 .stream()

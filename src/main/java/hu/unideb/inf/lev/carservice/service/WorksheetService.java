@@ -69,13 +69,6 @@ public interface WorksheetService {
     List<Worksheet> getAllWorksheet();
 
     /**
-     * Gets all worksheet entities matching the provided string.
-     * @param str A string value
-     * @return A list of worksheet entities matching the criteria.
-     */
-    List<Worksheet> textSearchWorksheet(String str);
-
-    /**
      * Calculates the sum of job prices of the worksheet.
      * @param worksheet A worksheet entity.
      * @return The sum of job costs.
